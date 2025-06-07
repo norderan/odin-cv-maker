@@ -114,7 +114,7 @@ export default function App() {
           <Educations
             educations={educations}
             editingId={editingEducationId}
-          setEditingId={setEditingEducationId}
+            setEditingId={setEditingEducationId}
             handleAdd={handleAddEducation}
             handleChange={handleChangeEducation}
             handleDelete={handleDeleteEducation}
@@ -140,6 +140,11 @@ export default function App() {
             experiences={experiences}
           />
         </div>
+
+        <footer className="footer">
+          <p>Made by <a href="https://github.com/norderan/odin-cv-maker" target="_blank" rel="noopener noreferrer" className="attribution-link">by Norderan</a></p>
+          <p>Copyright © {new Date().getFullYear()} Norderan. All rights reserved.</p>
+        </footer>
       </div>
   );
 }
