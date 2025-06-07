@@ -1,41 +1,75 @@
+/**
+ * Structure of `personalInfo` state:
+ * @typedef {Object} PersonalInfo
+ * @property {string} name - The name of the individual.
+ * @property {string} email - The email address of the individual.
+ * @property {string} phone - The phone number of the individual.
+ * @property {string} address - The address of the individual.
+ */
+
+/**
+ * Structure of an education entry in `educations` state:
+ * @typedef {Object} Education
+ * @property {string} id - Unique identifier for the education entry.
+ * @property {string} schoolDegree - The name of the school or degree obtained.
+ * @property {string} startDate - The start date of the education.
+ * @property {string} endDate - The end date of the education.
+ * @property {string} location - The location of the school or institution.
+ */
+
+/**
+ * Structure of an experience entry in `experiences` state:
+ * @typedef {Object} Experience
+ * @property {string} id - Unique identifier for the experience entry.
+ * @property {string} company - The name of the company.
+ * @property {string} position - The position held at the company.
+ * @property {string} startDate - The start date of the experience.
+ * @property {string} endDate - The end date of the experience.
+ * @property {string} location - The location of the company or job.
+ * @property {string} description - A description of the responsibilities or achievements in the role.
+ */
 import React, { useState } from 'react';
 import PersonalInfoForm from './components/PersonalInfoForm';
 import Educations from './components/Educations';
 import Experiences from './components/Experiences'; 
+import Preview from './components/Preview';
+import './App.css';
+import {
+  initialPersonalInfo,
+  initialEducations,
+  initialExperiences,
+} from './data/initialCvData';
 
 export default function App() {
-  const [personalInfo, setPersonalInfo] = useState({ name: '', email: '', phone: '', address: '' });
+  const [personalInfo, setPersonalInfo] = useState(initialPersonalInfo);
+  const [educations, setEducations] = useState(initialEducations);
+  const [editingEducationId, setEditingEducationId] = useState(null);
 
-
-  // Education management
-  const [educations, setEducations] = useState([]);
-  const [editingEducationId, setEditingEducationId] = useState(null);  
-
-  const handleAddEducation = () => { 
+  const handleAddEducation = () => {
     const newEdu = {
       id: crypto.randomUUID(),
       schoolDegree: '',
       startDate: '',
       endDate: '',
-      location: ''
+      location: '',
     };
     setEducations([...educations, newEdu]);
     setEditingEducationId(newEdu.id);
   };
 
-  const handleChangeEducation = (id, updatedEdu) => { 
+  const handleChangeEducation = (id, updatedEdu) => {
     setEducations(educations.map(edu => (edu.id === id ? updatedEdu : edu)));
   };
 
-  const handleDeleteEducation = id => { 
+  const handleDeleteEducation = (id) => {
     setEducations(educations.filter(edu => edu.id !== id));
     if (editingEducationId === id) setEditingEducationId(null);
   };
 
 
   // Experience management
-  const [experiences, setExperiences] = useState([]);
-  const [editingExperienceId, setEditingExperienceId] = useState(null); 
+  const [experiences, setExperiences] = useState(initialExperiences);
+  const [editingExperienceId, setEditingExperienceId] = useState(null);
 
   const handleAddExperience = () => {
     const newExp = {
@@ -61,60 +95,37 @@ export default function App() {
   };
 
   return (
-    <>
-      <div>
-        <h1>CV Maker</h1>
-        <PersonalInfoForm data={personalInfo} onChange={setPersonalInfo} />
-
-        <Educations
-          educations={educations}
-          editingId={editingEducationId}
+    <div className="app-container"> {/* Optional: Add a container for overall layout */}
+        <div className="editor-section"> {/* Optional: A section for the input forms */}
+          <h1>CV Maker</h1>
+          <PersonalInfoForm data={personalInfo} onChange={setPersonalInfo} />
+          <Educations
+            educations={educations}
+            editingId={editingEducationId}
           setEditingId={setEditingEducationId}
-          handleAdd={handleAddEducation}
-          handleChange={handleChangeEducation}
-          handleDelete={handleDeleteEducation}
-        />
-
-        <Experiences
-          experiences={experiences}
-          editingId={editingExperienceId}
-          setEditingId={setEditingExperienceId}
-          handleAdd={handleAddExperience}
-          handleChange={handleChangeExperience}
-          handleDelete={handleDeleteExperience}
-        />
-      </div>
-
-      <div>
-        <h2>Preview</h2>
-        <div>
-          <h3>{personalInfo.name}</h3>
-          <p>Email: {personalInfo.email}</p>
-          <p>Phone: {personalInfo.phone}</p>
-          <p>Address: {personalInfo.address}</p>
+            handleAdd={handleAddEducation}
+            handleChange={handleChangeEducation}
+            handleDelete={handleDeleteEducation}
+          />
+          <Experiences
+            experiences={experiences}
+            editingId={editingExperienceId}
+            setEditingId={setEditingExperienceId}
+            handleAdd={handleAddExperience}
+            handleChange={handleChangeExperience}
+            handleDelete={handleDeleteExperience}
+          />
         </div>
-        <div>
-          <h3>Education</h3>
-          {educations.map((edu) => (
-            <div key={edu.id}>
-              <p>School: {edu.schoolDegree}</p> 
-              <p>Start Date: {edu.startDate}</p>
-              <p>End Date: {edu.endDate}</p>
-              <p>Location: {edu.location}</p>
-            </div>
-          ))}
-        </div>
-        <div>
-          <h3>Experience</h3>
-          {experiences.map((exp) => (
-            <div key={exp.id}>
-              <p><strong>{exp.position}</strong> at {exp.company}</p>
-              <p>{exp.startDate} – {exp.endDate} {exp.location && `, ${exp.location}`}</p>
-              <p>{exp.description}</p>
-            </div>
-          ))}
+
+        {/* Render the Preview component here */}
+        <div className="preview-section"> {/* Optional: A section for the preview */}
+          <Preview
+            personalInfo={personalInfo}
+            educations={educations}
+            experiences={experiences}
+          />
         </div>
       </div>
-    </>
   );
 }
+
