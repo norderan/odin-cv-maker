@@ -1,33 +1,14 @@
-import React, { useState } from 'react';
+import React from 'react';
 import EducationForm from './EducationForm';
 
-
-export default function Educations() {
-  const [educations, setEducations] = useState([]);
-  const [editingId, setEditingId] = useState(null);
-
-  const handleAdd = () => {
-    const newEdu = {
-      id: crypto.randomUUID(),
-      school: '',
-      degree: '',
-      startDate: '',
-      endDate: '',
-      location: ''
-    };
-    setEducations([...educations, newEdu]);
-    setEditingId(newEdu.id);
-  };
-
-  const handleChange = (id, updatedEdu) => {
-    setEducations(educations.map(edu => (edu.id === id ? updatedEdu : edu)));
-  };
-
-  const handleDelete = id => {
-    setEducations(educations.filter(edu => edu.id !== id));
-    if (editingId === id) setEditingId(null);
-  };
-
+export default function Educations({
+  educations,
+  editingId,
+  setEditingId,
+  handleAdd,
+  handleChange,
+  handleDelete,
+}) {
   return (
     <div>
       <h2>Education</h2>

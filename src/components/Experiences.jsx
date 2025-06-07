@@ -1,33 +1,15 @@
-import React, { useState } from 'react';
+import React from 'react'; // No longer need useState here
 import ExperienceForm from './ExperienceForm';
 
-export default function Experiences() {
-  const [experiences, setExperiences] = useState([]);
-  const [editingId, setEditingId] = useState(null);
-
-  const handleAdd = () => {
-    const newExp = {
-      id: crypto.randomUUID(),
-      company: '',
-      position: '',
-      startDate: '',
-      endDate: '',
-      location: '',
-      description: ''
-    };
-    setExperiences([...experiences, newExp]);
-    setEditingId(newExp.id);
-  };
-
-  const handleChange = (id, updatedExp) => {
-    setExperiences(experiences.map(exp => (exp.id === id ? { ...updatedExp, id } : exp)));
-  };
-
-  const handleDelete = id => {
-    setExperiences(experiences.filter(exp => exp.id !== id));
-    if (editingId === id) setEditingId(null);
-  };
-
+// Accept props from the parent (App component)
+export default function Experiences({
+  experiences,
+  editingId,
+  setEditingId,
+  handleAdd,
+  handleChange,
+  handleDelete,
+}) {
   return (
     <div>
       <h2>Experience</h2>
