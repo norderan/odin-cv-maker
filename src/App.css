@@ -95,6 +95,19 @@ body {
   .editor-section button.delete-btn:hover {
     background-color: #c82333;
   }
+  .clear-all-btn {
+    background-color: #f44336; /* Red color for clear button */
+    margin-top: 30px; /* Add some space above it */
+    width: 100%; /* Make it full width */
+    padding: 12px 20px;
+    font-size: 1.1em;
+    border-radius: 6px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .clear-all-btn:hover {
+    background-color: #da190b;
+  }
   
   /* Adjust layout for smaller screens */
   @media (max-width: 900px) {
@@ -113,5 +126,28 @@ body {
   
     .preview-section {
       border-radius: 0 0 8px 8px; /* Adjust rounded corners */
+    }
+
+
+
+    .app-container {
+      grid-template-columns: 1fr;
+      padding: 10px;
+      margin: 10px auto;
+    }
+  
+    .editor-section {
+      border-right: none;
+      border-bottom: 1px solid #e0e0e0;
+      border-radius: 8px 8px 0 0;
+      padding-bottom: 20px;
+    }
+  
+    .preview-section {
+      border-radius: 0 0 8px 8px;
+    }
+  
+    .clear-all-btn {
+      margin-top: 20px; /* Adjust margin for smaller screens */
     }
   }

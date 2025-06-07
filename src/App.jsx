@@ -94,6 +94,18 @@ export default function App() {
     if (editingExperienceId === id) setEditingExperienceId(null);
   };
 
+  // Clear all CV data
+  const handleClearAll = () => {
+    const confirmClear = window.confirm("Are you sure you want to clear all CV data? This action cannot be undone.");
+    if (confirmClear) {
+      setPersonalInfo({ name: '', email: '', phone: '', address: '' }); 
+      setEducations([]); 
+      setEditingEducationId(null); 
+      setExperiences([]); 
+      setEditingExperienceId(null); 
+    }
+  };
+
   return (
     <div className="app-container"> {/* Optional: Add a container for overall layout */}
         <div className="editor-section"> {/* Optional: A section for the input forms */}
@@ -115,6 +127,9 @@ export default function App() {
             handleChange={handleChangeExperience}
             handleDelete={handleDeleteExperience}
           />
+          <button onClick={handleClearAll} className="clear-all-btn">
+            Clear All
+          </button>
         </div>
 
         {/* Render the Preview component here */}
